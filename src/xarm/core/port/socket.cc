@@ -13,6 +13,7 @@
 #include "xarm/core/port/socket.h"
 #include "xarm/core/os/network.h"
 #include "xarm/core/xarm_config.h"
+#include <sys/time.h>
 
 #ifdef _WIN32
 #include <ws2tcpip.h>
@@ -299,7 +300,12 @@ int SocketPort::read_frame(unsigned char *data) {
 }
 
 int SocketPort::write_frame(unsigned char *data, int len) {
+  // struct timeval tva, tvb;
+  // gettimeofday(&tva, NULL);
   int ret = socket_send_data(fp_, data, len);
+  // gettimeofday(&tvb, NULL);
+  // printf("%s %d: duration: %ld us\n", __FUNCTION__, __LINE__,
+  //        (tvb.tv_sec - tva.tv_sec) * 1000000 + tvb.tv_usec - tva.tv_usec);
   return ret;
 }
 

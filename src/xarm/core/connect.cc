@@ -61,6 +61,17 @@ SocketPort *connect_tcp_report_rich(char *server_ip) {
   return arm_report;
 }
 
+SocketPort *connect_tcp_report_fast(char *server_ip) {
+  SocketPort *arm_report = new SocketPort(
+      server_ip, XARM_CONF::TCP_PORT_REPORT_FAST, 5, 1024, 1); // 494 + 4
+  if (arm_report->is_ok() != 0) {
+    fprintf(stderr, "Error: Tcp Report fast connection failed\n");
+    return NULL;
+  }
+  printf("Tcp Report fast connection successful\n");
+  return arm_report;
+}
+
 SocketPort *connect_tcp_report_devl(char *server_ip) {
   SocketPort *arm_report =
     new SocketPort(server_ip, XARM_CONF::TCP_PORT_REPORT_DEVL, 10, 256 + 4, 1); // 87 + 48 + 4
@@ -77,6 +88,8 @@ SocketPort *connect_tcp_report(char *server_ip, std::string report_type) {
     return connect_tcp_report_devl(server_ip);
   else if (report_type == "rich")
     return connect_tcp_report_rich(server_ip);
+  else if (report_type == "fast")
+    return connect_tcp_report_fast(server_ip);
   else
     return connect_tcp_report_norm(server_ip);
 }

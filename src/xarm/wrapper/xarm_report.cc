@@ -7,6 +7,7 @@
  * 
  * @author Vinman <vinman.wen@ufactory.cc> <vinman.cub@gmail.com>
  */
+#include <sys/time.h>
 
 #include "xarm/wrapper/xarm_api.h"
 
@@ -162,6 +163,7 @@ void XArmAPI::_update_old(unsigned char *rx_data) {
 }
 
 void XArmAPI::_update(unsigned char *rx_data) {
+  printf("update???\n");
   long long report_time = get_system_time();
   if (is_first_report_) {
     last_report_time_ = report_time;

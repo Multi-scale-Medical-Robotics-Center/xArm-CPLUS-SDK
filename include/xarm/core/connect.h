@@ -20,6 +20,7 @@ UxbusCmdTcp *connect_tcp_control(char *server_ip);
 SocketPort *connect_tcp_report_norm(char *server_ip);
 SocketPort *connect_tcp_report_rich(char *server_ip);
 SocketPort *connect_tcp_report_devl(char *server_ip);
+SocketPort *connect_tcp_report_fast(char *server_ip);
 SocketPort *connect_tcp_report(char *server_ip, std::string report_type="normal");
 
 #define connext_tcp_report_norm connect_tcp_report_norm

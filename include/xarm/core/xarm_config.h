@@ -22,6 +22,7 @@ public:
   static const int GPIO_ID = 9;
   static const int SERIAL_BAUD = 921600;
   static const int TCP_PORT_CONTROL = 502;
+  static const int TCP_PORT_REPORT_FAST = 30000;
   static const int TCP_PORT_REPORT_NORM = 30001;
   static const int TCP_PORT_REPORT_RICH = 30002;
   static const int TCP_PORT_REPORT_DEVL = 30003;

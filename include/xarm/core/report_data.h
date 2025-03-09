@@ -149,11 +149,27 @@ private:
   int _flush_rich_data(XArmReportData *report_data_ptr);
   void _print_rich_data(void);
   
+  int _check_fast_data(unsigned char *rx_data);
+  int _flush_fast_data(unsigned char *rx_data);
+  void _print_fast_data(void);
+
   void __flush_debug_data(int since_size);
 
 public:
   std::string report_type;
   int total_num;
+
+  // fast data
+  float target_joint_position[7];
+  float target_joint_velocity[7];
+  float target_joint_acceleration[7];
+  float actual_joint_position[7];
+  float actual_joint_velocity[7];
+  float actual_joint_acceleration[7];
+  float actual_joint_current[7];
+  float estimated_joint_torque[7];
+
+  
   // dev/normal/rich report data
   int state;
   int mode;

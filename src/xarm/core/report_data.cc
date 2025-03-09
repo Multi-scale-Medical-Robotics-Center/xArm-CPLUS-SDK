@@ -375,6 +375,36 @@ void XArmReportData::__flush_debug_data(int since_size) {
   }
 }
 
+int XArmReportData::_flush_fast_data(unsigned char *rx_data) {
+  // from _flush_common_data and _flush_rich_data and _flush_normal_data
+  int ret = _check_fast_data(rx_data);
+  if (ret != 0)
+    return ret;
+
+  data_fp = &rx_data[4];
+  total_num = bin8_to_32(data_fp);
+  state = data_fp[12] & 0x0F;
+  mode = data_fp[12] >> 4;
+  cmdnum = bin8_to_16(&data_fp[13]);
+  // 16-32 Bytes Reserved for System Information
+  hex_to_nfp32(&data_fp[32], target_joint_position, 7);
+  hex_to_nfp32(&data_fp[60], target_joint_velocity, 7);
+  hex_to_nfp32(&data_fp[88], target_joint_acceleration, 7);
+  hex_to_nfp32(&data_fp[116], actual_joint_position, 7);
+  hex_to_nfp32(&data_fp[144], actual_joint_velocity, 7);
+  hex_to_nfp32(&data_fp[172], actual_joint_acceleration, 7);
+  hex_to_nfp32(&data_fp[200], actual_joint_current, 7);
+  hex_to_nfp32(&data_fp[228], estimated_joint_torque, 7);
+  // 257-424 Bytes Reserved for Joints
+  // ignore the rest
+
+  return ret;
+}
+void XArmReportData::_print_fast_data(void) 
+{
+  return;
+}
+
 int XArmReportData::_flush_dev_data(unsigned char *rx_data) {
   int ret = __flush_common_data(rx_data);
   if (ret != 0) return ret;
@@ -612,7 +642,10 @@ void XArmReportData::_print_rich_data(void)
 
 int XArmReportData::flush_data(unsigned char *rx_data)
 {
-  if (report_type == "dev") {
+  if (report_type == "fast") {
+    return _flush_fast_data(rx_data);
+  }
+  else if (report_type == "dev") {
     return _flush_dev_data(rx_data);
   }
   else if (report_type == "rich") {
@@ -625,7 +658,10 @@ int XArmReportData::flush_data(unsigned char *rx_data)
 
 void XArmReportData::print_data(void)
 {
-  if (report_type == "dev") {
+  if (report_type == "fast") {
+    _print_fast_data();
+  }
+  else if (report_type == "dev") {
     _print_dev_data();
   }
   else if (report_type == "rich") {
@@ -640,6 +676,13 @@ int XArmReportData::__check_common_data(unsigned char *rx_data)
 {
   if (bin8_to_32(rx_data) < 87) return -1;
   if (bin8_to_32(&rx_data[4]) < 87) return -1;
+  return 0;
+}
+
+int XArmReportData::_check_fast_data(unsigned char *rx_data)
+{
+  if (bin8_to_32(rx_data) < 256) return -1;
+  if (bin8_to_32(&rx_data[4]) < 256) return -1;
   return 0;
 }
 
@@ -670,7 +713,10 @@ int XArmReportData::_check_rich_data(unsigned char *rx_data)
 
 int XArmReportData::check_data(unsigned char *rx_data)
 {
-  if (report_type == "dev") {
+  if (report_type == "fast") {
+    return _check_fast_data(rx_data);
+  }
+  else if (report_type == "dev") {
     return _check_dev_data(rx_data);
   }
   else if (report_type == "rich") {
