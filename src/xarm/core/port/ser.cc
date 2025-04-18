@@ -28,7 +28,7 @@
 #include "xarm/core/common/crc16.h"
 
 void SerialPort::recv_proc(void) {
-  unsigned char ch;
+  unsigned char ch = 0;
   int ret;
   while (state_ == 0) {
     ret = read_char(&ch);

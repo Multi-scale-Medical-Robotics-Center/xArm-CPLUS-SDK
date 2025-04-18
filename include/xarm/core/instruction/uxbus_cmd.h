@@ -292,28 +292,85 @@ public:
   virtual void close(void);
   virtual int is_ok(void);
   virtual int get_protocol_identifier(void) { return 0; };
-  virtual int set_protocol_identifier(int protocol_identifier = 2) { return -11; };
+  virtual int set_protocol_identifier(int protocol_identifier = 2) {
+    (void) protocol_identifier;
+    return -11;
+  };
 
   /* modbus tcp func_code: 0x01 */
-  virtual int read_coil_bits(unsigned short addr, unsigned short quantity, unsigned char *bits) { return -11; };
+  virtual int read_coil_bits(unsigned short addr, unsigned short quantity, unsigned char *bits) {
+    (void) addr;
+    (void) quantity;
+    (void) bits;
+    return -11;
+  };
   /* modbus tcp func_code: 0x02 */
-  virtual int read_input_bits(unsigned short addr, unsigned short quantity, unsigned char *bits) { return -11; };
+  virtual int read_input_bits(unsigned short addr, unsigned short quantity, unsigned char *bits) {
+    (void) addr;
+    (void) quantity;
+    (void) bits;
+    return -11;
+  };
   /* modbus tcp func_code: 0x03 */
-  virtual int read_holding_registers(unsigned short addr, unsigned short quantity, int *regs, bool is_signed = false) { return -11; };
+  virtual int read_holding_registers(unsigned short addr, unsigned short quantity, int *regs, bool is_signed = false) {
+    (void) addr;
+    (void) quantity;
+    (void) regs;
+    (void) is_signed;
+    return -11;
+  };
   /* modbus tcp func_code: 0x04 */
-  virtual int read_input_registers(unsigned short addr, unsigned short quantity, int *regs, bool is_signed = false) { return -11; };
+  virtual int read_input_registers(unsigned short addr, unsigned short quantity, int *regs, bool is_signed = false) {
+    (void) addr;
+    (void) quantity;
+    (void) regs;
+    (void) is_signed;
+    return -11;
+  };
   /* modbus tcp func_code: 0x05 */
-  virtual int write_single_coil_bit(unsigned short addr, unsigned char bit_val) { return -11; };
+  virtual int write_single_coil_bit(unsigned short addr, unsigned char bit_val) {
+    (void) addr;
+    (void) bit_val;
+    return -11;
+  };
   /* modbus tcp func_code: 0x06 */
-  virtual int write_single_holding_register(unsigned short addr, int reg_val) { return -11; };
+  virtual int write_single_holding_register(unsigned short addr, int reg_val) {
+    (void) addr;
+    (void) reg_val;
+    return -11;
+  };
   /* modbus tcp func_code: 0x0F */
-  virtual int write_multiple_coil_bits(unsigned short addr, unsigned short quantity, unsigned char *bits) { return -11; };
+  virtual int write_multiple_coil_bits(unsigned short addr, unsigned short quantity, unsigned char *bits) {
+    (void) addr;
+    (void) quantity;
+    (void) bits;
+    return -11;
+  };
   /* modbus tcp func_code: 0x10 */
-  virtual int write_multiple_holding_registers(unsigned short addr, unsigned short quantity, int *regs) { return -11; };
+  virtual int write_multiple_holding_registers(unsigned short addr, unsigned short quantity, int *regs) {
+    (void) addr;
+    (void) quantity;
+    (void) regs;
+    return -11;
+  };
   /* modbus tcp func_code: 0x16 */
-  virtual int mask_write_holding_register(unsigned short addr, unsigned short and_mask, unsigned short or_mask) { return -11; };
+  virtual int mask_write_holding_register(unsigned short addr, unsigned short and_mask, unsigned short or_mask) {
+    (void) addr;
+    (void) and_mask;
+    (void) or_mask;
+    return -11;
+  };
   /* modbus tcp func_code: 0x17 */
-  virtual int write_and_read_holding_registers(unsigned short r_addr, unsigned short r_quantity, int *r_regs, unsigned short w_addr, unsigned short w_quantity, int *w_regs, bool is_signed = false) { return -11; };
+  virtual int write_and_read_holding_registers(unsigned short r_addr, unsigned short r_quantity, int *r_regs, unsigned short w_addr, unsigned short w_quantity, int *w_regs, bool is_signed = false) {
+    (void) r_addr; 
+    (void) r_quantity;
+    (void) r_regs;
+    (void) w_addr;
+    (void) w_quantity;
+    (void) w_regs;
+    (void) is_signed;
+    return -11;
+  };
 
 private:
   virtual int _send_modbus_request(unsigned char unit_id, unsigned char *pdu_data, unsigned short pdu_len, int prot_id = -1);
